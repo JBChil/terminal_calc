@@ -1,12 +1,9 @@
 fun main() {
 
     val operator = getAndValidateOperator()
-    println(operator)
 
     val firstNumber = getAndValidateNumber("Please enter the first number.")
-    println(firstNumber)
     val secondNumber = getAndValidateNumber("Please enter the second number.")
-    println(secondNumber)
 
     performCalculation(operator, firstNumber, secondNumber)
 }
@@ -28,26 +25,26 @@ fun getAndValidateOperator(): String {
 
 }
 
-fun getAndValidateNumber(numberRequest: String): Int {
+fun getAndValidateNumber(numberRequest: String): Double {
     var userNumber = getUserInput("Please enter the first number.")
     var isNumberValid = isInputANumber(userNumber)
     while (!isNumberValid) {
         userNumber = getUserInput("That is not a number. Please enter a valid number.")
         isNumberValid = isInputANumber(userNumber)
     }
-    return userNumber.toInt()
+    return userNumber.toDouble()
 }
 
 fun isInputANumber(numberToCheck: String): Boolean {
-    return when(numberToCheck.toIntOrNull())
+    return when(numberToCheck.toDoubleOrNull())
     {
         null -> false
         else -> true
     }
 }
 
-fun performCalculation(operator: String, firstNumber: Int, secondNumber: Int) {
-    var result: Int = 0
+fun performCalculation(operator: String, firstNumber: Double, secondNumber: Double) {
+    var result: Double = 0.0
     when(operator) {
         "+" -> result = firstNumber + secondNumber
         "-" -> result = firstNumber - secondNumber
