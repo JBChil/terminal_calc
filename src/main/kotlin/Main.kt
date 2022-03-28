@@ -1,47 +1,41 @@
-import com.sun.org.apache.xpath.internal.operations.Bool
-import javafx.beans.binding.When
-import java.util.logging.Handler
-
 fun main() {
 
-    println("What operation would you like to perform? ( + , - , * , / )")
-    val userInput = readln()
-    var validOperator: String = ""
-    if (validateOperator(userInput)) {
-        validOperator = userInput
-    } else {
-        print("This is not a valid operation.")
-    }
+    val operator = getAndValidateOperator()
+    println(operator)
 
-    println("Please enter the first number: ")
-    val firstNumber = getUserNumberInput()
+    val firstNumber = getAndValidateNumber("Please enter the first number.")
+    println(firstNumber)
+    val secondNumber = getAndValidateNumber("Please enter the second number.")
+    println(secondNumber)
 
-    println("Please enter the second number: ")
-    val secondNumber = getUserNumberInput()
-
-    performCalculation(validOperator, firstNumber, secondNumber)
+    performCalculation(operator, firstNumber, secondNumber)
 }
 
-fun validateOperator(userInput: String): Boolean {
+fun getUserInput(inputRequest: String): String {
+    println(inputRequest)
+    return readln()
+}
 
-    val acceptableOperators = listOf<String>(
+fun getAndValidateOperator(): String {
+    var userInput = getUserInput("What operation would you like to perform? ( + , - , * , / )")
+    val acceptableOperators = listOf(
         "+", "-", "*", "/"
     )
-    return acceptableOperators.contains(userInput)
+    while (!acceptableOperators.contains(userInput)) {
+        userInput = getUserInput("That is not a valid operator. Please enter a valid operator. ( + , - , * , / )")
+    }
+    return userInput
+
 }
 
-fun getUserNumberInput(): Int {
-    val number = readln()
-
-    var isNumberValid = false
+fun getAndValidateNumber(numberRequest: String): Int {
+    var userNumber = getUserInput("Please enter the first number.")
+    var isNumberValid = isInputANumber(userNumber)
     while (!isNumberValid) {
-        if (isInputANumber(number)) {
-            isNumberValid = true
-        } else {
-            println("This is not a valid number Please enter a valid number.")
-        }
+        userNumber = getUserInput("That is not a number. Please enter a valid number.")
+        isNumberValid = isInputANumber(userNumber)
     }
-    return number.toInt()
+    return userNumber.toInt()
 }
 
 fun isInputANumber(numberToCheck: String): Boolean {
@@ -60,6 +54,5 @@ fun performCalculation(operator: String, firstNumber: Int, secondNumber: Int) {
         "*" -> result = firstNumber * secondNumber
         "/" -> result = firstNumber / secondNumber
     }
-
     println("$firstNumber $operator $secondNumber = $result")
 }
