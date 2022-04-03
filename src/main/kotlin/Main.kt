@@ -26,7 +26,7 @@ fun getAndValidateOperator(): String {
 }
 
 fun getAndValidateNumber(numberRequest: String): Double {
-    var userNumber = getUserInput("Please enter the first number.")
+    var userNumber = getUserInput(numberRequest)
     var isNumberValid = isInputANumber(userNumber)
     while (!isNumberValid) {
         userNumber = getUserInput("That is not a number. Please enter a valid number.")
